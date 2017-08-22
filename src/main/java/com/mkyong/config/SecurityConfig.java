@@ -32,9 +32,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     String LOG_IN_URL_PAGE = "/login";
     String LOG_OUT_URL_PAGE = "/logout";
-    http.authorizeRequests()
-      .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-      .antMatchers("/admin/update**").access("hasRole('ROLE_ADMIN')")
+    http
+      .authorizeRequests()
+      .antMatchers(LOG_IN_URL_PAGE,
+        LOG_OUT_URL_PAGE,
+        "/css/**",
+        "/js/**",
+        "/img/**",
+        "/**/favicon.ico",
+        "/webjars/**",
+        "/login").permitAll()
+      .antMatchers("/**").fullyAuthenticated()
+      .anyRequest()
+      .authenticated()
         .and()
           .formLogin()
             .successHandler(savedRequestAwareAuthenticationSuccessHandler())
@@ -49,21 +59,47 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .csrf()
       .and()
         .rememberMe().tokenRepository(persistentTokenRepository())
-        .tokenValiditySeconds(1209600)
-      .and()
-        .authorizeRequests()
-        .antMatchers(LOG_IN_URL_PAGE,
-        LOG_OUT_URL_PAGE,
-        "/css/**",
-        "/js/**",
-        "/img/**",
-        "/**/favicon.ico",
-        "/webjars/**",
-        "/login").permitAll()
-      .antMatchers("/**").fullyAuthenticated()
-      .anyRequest()
-      .authenticated();
+        .tokenValiditySeconds(1209600);
+
+
   }
+
+//  @Override
+//  protected void configure(HttpSecurity http) throws Exception {
+//    String LOG_IN_URL_PAGE = "/login";
+//    String LOG_OUT_URL_PAGE = "/logout";
+//    http.authorizeRequests()
+//      .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+//      .antMatchers("/admin/update**").access("hasRole('ROLE_ADMIN')")
+//      .and()
+//      .formLogin()
+//      .successHandler(savedRequestAwareAuthenticationSuccessHandler())
+//      .loginPage("/login")
+//      .failureUrl("/login?error")
+//      .loginProcessingUrl("/auth/login_check")
+//      .usernameParameter("account_name")
+//      .passwordParameter("password")
+//      .and()
+//      .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//      .and()
+//      .csrf()
+//      .and()
+//      .rememberMe().tokenRepository(persistentTokenRepository())
+//      .tokenValiditySeconds(1209600)
+//      .and()
+//      .authorizeRequests()
+//      .antMatchers(LOG_IN_URL_PAGE,
+//        LOG_OUT_URL_PAGE,
+//        "/css/**",
+//        "/js/**",
+//        "/img/**",
+//        "/**/favicon.ico",
+//        "/webjars/**",
+//        "/login").permitAll()
+//      .antMatchers("/**").fullyAuthenticated()
+//      .anyRequest()
+//      .authenticated();
+//  }
 
   @Bean
   public PersistentTokenRepository persistentTokenRepository() {

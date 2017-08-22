@@ -7,7 +7,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-  <title>Fintech Application</title>
+  <title>Title Application</title>
   <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
   <%-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>--%>
   <script src="https://code.highcharts.com/highcharts.js"></script>
