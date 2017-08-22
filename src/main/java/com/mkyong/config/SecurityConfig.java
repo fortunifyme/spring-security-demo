@@ -28,12 +28,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       .usersByUsernameQuery("select account_name ,password, enabled from account where account_name = ?")
       .authoritiesByUsernameQuery("select account_name, role from user_roles where account_name = ?");
   }
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     String LOG_IN_URL_PAGE = "/login";
     String LOG_OUT_URL_PAGE = "/logout";
-    http
-      .authorizeRequests()
+    http.authorizeRequests()
       .antMatchers(LOG_IN_URL_PAGE,
         LOG_OUT_URL_PAGE,
         "/css/**",
@@ -42,28 +42,58 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         "/**/favicon.ico",
         "/webjars/**",
         "/login").permitAll()
-      .antMatchers("/**").fullyAuthenticated()
-      .anyRequest()
-      .authenticated()
-        .and()
-          .formLogin()
-            .successHandler(savedRequestAwareAuthenticationSuccessHandler())
-            .loginPage("/login")
-            .failureUrl("/login?error")
-            .loginProcessingUrl("/auth/login_check")
-            .usernameParameter("account_name")
-            .passwordParameter("password")
-       .and()
-        .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+      .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+      .antMatchers("/admin/update**").access("hasRole('ROLE_ADMIN')")
       .and()
-        .csrf()
+      .formLogin()
+      .successHandler(savedRequestAwareAuthenticationSuccessHandler())
+      .loginPage("/login")
+      .failureUrl("/login?error")
+      .loginProcessingUrl("/auth/login_check")
+      .usernameParameter("account_name")
+      .passwordParameter("password")
       .and()
-        .rememberMe().tokenRepository(persistentTokenRepository())
-        .tokenValiditySeconds(1209600);
-
-
+      .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+      .and()
+      .csrf()
+      .and()
+      .rememberMe().tokenRepository(persistentTokenRepository())
+      .tokenValiditySeconds(1209600);
   }
 
+//  @Override
+//  protected void configure(HttpSecurity http) throws Exception {
+//    String LOG_IN_URL_PAGE = "/login";
+//    String LOG_OUT_URL_PAGE = "/logout";
+//    http
+//      .authorizeRequests()
+//      .antMatchers(LOG_IN_URL_PAGE,
+//        LOG_OUT_URL_PAGE,
+//        "/css/**",
+//        "/js/**",
+//        "/img/**",
+//        "/**/favicon.ico",
+//        "/webjars/**",
+//        "/login").permitAll()
+//      .antMatchers("/**").fullyAuthenticated()
+//      .anyRequest()
+//      .authenticated()
+//      .and()
+//      .formLogin()
+//      .successHandler(savedRequestAwareAuthenticationSuccessHandler())
+//      .loginPage("/login")
+//      .failureUrl("/login?error")
+//      .loginProcessingUrl("/auth/login_check")
+//      .usernameParameter("account_name")
+//      .passwordParameter("password")
+//      .and()
+//      .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//      .and()
+//      .csrf()
+//      .and()
+//      .rememberMe().tokenRepository(persistentTokenRepository())
+//      .tokenValiditySeconds(1209600);
+//  }
 //  @Override
 //  protected void configure(HttpSecurity http) throws Exception {
 //    String LOG_IN_URL_PAGE = "/login";

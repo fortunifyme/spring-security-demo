@@ -10,14 +10,14 @@
   <title>Title Application</title>
   <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
   <%-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>--%>
-  <script src="https://code.highcharts.com/highcharts.js"></script>
-  <%-- <link rel="stylesheet"
-         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>--%>
+<%--  <script src="https://code.highcharts.com/highcharts.js"></script>
+  &lt;%&ndash; <link rel="stylesheet"
+         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>&ndash;%&gt;
   <script type="text/javascript"
           src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
   <script type="text/javascript"
           src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js">
-  </script>
+  </script>--%>
 
 
   <%-- <script

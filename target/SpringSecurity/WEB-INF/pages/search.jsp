@@ -10,7 +10,7 @@
 <html>
 <head>
   <title>Search data </title>
-  <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+  <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <h1>Let's make some search ! </h1>
 <body>
